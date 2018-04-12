@@ -9,7 +9,4 @@ Gradle is used to build the project and to run unit tests.
 2. Run the application as Java application. Right click on project_name -> Run As -> Java Application.
 
 
-<p align="center">
-  <img src="/Users/vish/Downloads/UML Diagram.jpg" width="350"/>
-  <img src="/Users/vish/Downloads/UML Diagram.jpg" width="350"/>
-</p>
+![alt text](https://github.com/vishakhaj/tictactoe/blob/master/UML%20Diagram.jpg)
