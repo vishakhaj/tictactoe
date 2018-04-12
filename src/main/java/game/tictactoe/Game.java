@@ -20,7 +20,6 @@ public class Game {
 	private Players currentPlayer;
 	private String playerSelection;
 	private GameState gameState;
-	private int boardSize;
 
 	private List<String> listOfIndex = new ArrayList<>();
 	public static Seed boardSizeArray[][] = new Seed[10][10];
@@ -41,23 +40,23 @@ public class Game {
 
 	public void init() {
 		marker.markers();
-		boardSize = board.inputBoardSize();
+		board.inputBoardSize();
 		currentState = GameState.PLAYING;
 		currentPlayer = DEFAULT_FIRST_PLAYER;
-		makeMove(currentPlayer);
+		startGame(currentPlayer);
 	}
 
-	private void makeMove(Players currentPlayer) {
+	private void startGame(Players currentPlayer) {
 
 		while (currentState == GameState.PLAYING) {
 			if (currentPlayer == Players.HUMAN) {
-				playerSelection = human.makeMove(currentPlayer);
+				playerSelection = human.makeMove(currentPlayer, listOfIndex);
 			} else {
 				playerSelection = computer.makeMove(currentPlayer, listOfIndex);
 			}
 			listOfIndex.add(playerSelection);
 			currentPlayer = currentPlayer == DEFAULT_FIRST_PLAYER ? Players.COMPUTER : Players.HUMAN;
-			gameState = winner.checkWin(boardSize, boardSizeArray);
+			gameState = winner.checkWin();
 			currentState = gameState;
 			if (currentState != GameState.PLAYING) {
 				break;
@@ -65,3 +64,4 @@ public class Game {
 		}
 	}
 }
+

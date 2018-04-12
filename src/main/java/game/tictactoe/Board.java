@@ -6,7 +6,6 @@ import game.tictactoe.enums.Seed;
 
 /**
  * @author vish- Inputs board size from the user.
- *
  */
 public class Board {
 
@@ -17,24 +16,26 @@ public class Board {
 	public int inputBoardSize() {
 		while (flag) {
 			System.out.print("Enter the number of grids you want to play with:");
-			validateBoardSize(scan.next());
+			boardSize = validateBoardSize(scan.next());
 		}
 		printBoard(boardSize);
 		return boardSize;
 	}
 
-	public void validateBoardSize(String input) {
+	public int validateBoardSize(String input) {
 		try {
 			boardSize = Integer.parseInt(input);
 			if (boardSize < 3 || boardSize > 10) {
-				System.out.println("Please choose a board size between 3 and 10");
+				System.err.println("Please choose a board size between 3 and 10");
 			} else {
 				flag = false;
+				return Integer.parseInt(input);
 			}
 		} catch (NumberFormatException e) {
 			e.getMessage();
-			System.out.println("Please enter a number");
+			System.err.println("Please enter a number");
 		}
+		return 0;
 	}
 
 	private void printBoard(int boardSize) {

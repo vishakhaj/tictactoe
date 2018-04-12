@@ -19,7 +19,7 @@ public class BoardTest {
 
 	@Before
 	public void setUp() {
-		System.setOut(new PrintStream(outContent));
+		System.setErr(new PrintStream(outContent));
 		board = new Board();
 	}
 
@@ -30,13 +30,15 @@ public class BoardTest {
 	}
 
 	@Test
+	public void setBoardSizeGreaterThan10_EnsureErrorMessageDisplayed() {
+		board.validateBoardSize("20");
+		assertOutOfBoundsErrorMessageDisplayed();
+	}
+
+	@Test
 	public void setBoardSizeOf3EnsureNoErrorMessageDisplayed() {
 		board.validateBoardSize("3");
 		assertNoErrorMessageDisplayed();
-	}
-
-	private void assertOutOfBoundsErrorMessageDisplayed() {
-		assertEquals(OUT_OUT_BOUNDS_ERROR_MESSAGE, outContent.toString().trim());
 	}
 
 	@Test
@@ -45,14 +47,26 @@ public class BoardTest {
 		assertNoErrorMessageDisplayed();
 	}
 
-	private void assertNoErrorMessageDisplayed() {
-		assertEquals("", outContent.toString().trim());
-	}
-
 	@Test
 	public void setBoardSizeWithInvalidNumberEnsureInvalidNumberMessageDisplayed() {
 		board.validateBoardSize("blah");
 		assertInvalidNumberMessageDisplayed();
+	}
+
+	@Test
+	public void test() {
+		String size = "3";
+		int validateBoardSize = board.validateBoardSize(size);
+		int inputBoardSize = board.inputBoardSize();
+		assertEquals(validateBoardSize, inputBoardSize);
+	}
+
+	private void assertOutOfBoundsErrorMessageDisplayed() {
+		assertEquals(OUT_OUT_BOUNDS_ERROR_MESSAGE, outContent.toString().trim());
+	}
+
+	private void assertNoErrorMessageDisplayed() {
+		assertEquals("", outContent.toString().trim());
 	}
 
 	private void assertInvalidNumberMessageDisplayed() {
