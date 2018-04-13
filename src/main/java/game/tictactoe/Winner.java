@@ -1,124 +1,132 @@
 package game.tictactoe;
 
-import game.tictactoe.enums.GameState;
+import java.util.HashMap;
+
 import game.tictactoe.enums.Players;
 import game.tictactoe.enums.Seed;
 
 public class Winner {
 
-	public GameState checkWin() {
-		int row = 0;
-		int col = 0;
-		int diagonalCountLTR_X = 0;
-		int diagonalCountLTR_O = 0;
-		int diagonalCountRTL_X = 0;
-		int diagonalCountRTL_O = 0;
+	private HashMap<String, String> board = new HashMap<>();
 
-		while (row < Board.boardSize) {
-			int counthorX = 0;
-			int counthorO = 0;
-			for (int j = 0; j < Board.boardSize; j++) {
-				if (Game.boardSizeArray[row][j] == Seed.MARKER1) {
-					counthorX += 1;
-				}
-				if (Game.boardSizeArray[row][j] == Seed.MARKER2) {
-					counthorO += 1;
-				}
-			}
-			row++;
+	public void updateMap(String playerSelection, Players player) {
+		String rowKey = "row" + playerSelection.charAt(0);
+		String columnKey = "column" + playerSelection.charAt(1);
+		String marker = player == Players.HUMAN ? Seed.MARKER1.getMarker() : Seed.MARKER2.getMarker();
 
-			if (counthorX == 3) {
-				System.out.println("Winner: " + Players.HUMAN);
-				return GameState.WINNER;
-			}
-
-			if (counthorO == 3) {
-				System.out.println("Winner:" + Players.COMPUTER);
-				return GameState.WINNER;
-			}
+		if (board.containsKey(rowKey)) {
+			// Get the row value and concatenate the new value at the end of the
+			// string and put it back
+			board.put(rowKey, board.get(rowKey) + marker);
+		} else {
+			board.put(rowKey, marker);
 		}
 
-		while (col < Board.boardSize) {
-			int countverX = 0;
-			int countverO = 0;
-			for (int i = 0; i < Board.boardSize; i++) {
-				if (Game.boardSizeArray[i][col] == Seed.MARKER1) {
-					countverX += 1;
-				}
-				if (Game.boardSizeArray[i][col] == Seed.MARKER2) {
-					countverO += 1;
-				}
-			}
-			col++;
+		if (board.containsKey(columnKey)) {
+			// Get the column value and concatenate the new value at the end of
+			// the string and put it back
+			board.put(columnKey, board.get(columnKey) + marker);
+		} else {
+			board.put(columnKey, marker);
+		}
 
-			if (countverX == 3) {
-				System.out.println("Winner: " + Players.HUMAN);
-				return GameState.WINNER;
-			}
-
-			if (countverO == 3) {
-				System.out.println("Winner: " + Players.COMPUTER);
-				return GameState.WINNER;
+		if (playerSelection.charAt(0) == playerSelection.charAt(1)) {
+			String diagonalKey = "LtoR";
+			if(board.containsKey(diagonalKey)){
+				//Get the column value and concatenate the new value at the end of the string and put it back
+				board.put(diagonalKey, board.get(diagonalKey) + marker);
+			} else {
+				board.put(diagonalKey, marker);
 			}
 		}
 
-		for (int i = 0; i < Board.boardSize; i++) {
-			for (int j = 0; j < Board.boardSize; j++) {
-				if (i == j && Game.boardSizeArray[i][j] == Seed.MARKER1) {
-					diagonalCountLTR_X += 1;
-				}
+		if (Board.diagonalSet.contains(playerSelection)) {
+			String diagonalKey = "RtoL";
+			if(board.containsKey(diagonalKey)){
+				//Get the column value and concatenate the new value at the end of the string and put it back
+				board.put(diagonalKey, board.get(diagonalKey) + marker);
+			} else {
+				board.put(diagonalKey, marker);
+			}
+		}
+	}
 
-				if (i == j && Game.boardSizeArray[i][j] == Seed.MARKER2) {
-					diagonalCountLTR_O += 1;
-				}
+	public Players checkDistinctMarkers(String playerSelection) {
+		String human = Seed.MARKER1.getMarker();
+		String computer = Seed.MARKER2.getMarker();
+		String rowKey = "row" + playerSelection.charAt(0);
+		String columnKey = "column" + playerSelection.charAt(1);
+		String target;
+
+		// Gets the value stores it in target
+		// Current example will return => "XXX"
+		target = board.get(rowKey);
+
+		if (target.indexOf(human) > -1 && target.indexOf(computer) > -1) {
+			Game.flaggedSet.add(rowKey);
+		}
+
+		if (target.length() == Board.boardSize) {
+			if (target.indexOf(human) > -1 && target.indexOf(computer) > -1) {
+			} else if ((target.indexOf(human) > -1)) {
+				return Players.HUMAN;
+			} else {
+				return Players.COMPUTER;
 			}
 		}
 
-		if (diagonalCountLTR_X == 3) {
-			System.out.println("Winner: " + Players.HUMAN);
-			return GameState.WINNER;
+		target = board.get(columnKey);
+
+		if (target.indexOf(human) > -1 && target.indexOf(computer) > -1) {
+			Game.flaggedSet.add(columnKey);
 		}
 
-		if (diagonalCountLTR_O == 3) {
-			System.out.println("Winner: " + Players.HUMAN);
-			return GameState.WINNER;
-		}
-
-		for (int i = 0; i < Board.boardSize; i++) {
-			for (int j = 0; j < Board.boardSize; j++) {
-				if ((i + j) == (Board.boardSize - 1) && Game.boardSizeArray[i][j] == Seed.MARKER1) {
-					diagonalCountRTL_X += 1;
-				}
-				if ((i + j) == (Board.boardSize - 1) && Game.boardSizeArray[i][j] == Seed.MARKER2) {
-					diagonalCountRTL_O += 1;
-				}
+		if (target.length() == Board.boardSize) {
+			if (target.indexOf(human) > -1 && target.indexOf(computer) > -1) {
+			} else if ((target.indexOf(human) > -1)) {
+				return Players.HUMAN;
+			} else {
+				return Players.COMPUTER;
 			}
 		}
-		if (diagonalCountRTL_X == 3) {
-			System.out.println("Winner: " + Players.HUMAN);
-			return GameState.WINNER;
-		}
 
-		if (diagonalCountRTL_O == 3) {
-			System.out.println("Winner: " + Players.HUMAN);
-			return GameState.WINNER;
-		}
+		if (playerSelection.charAt(0) == playerSelection.charAt(1)) {
+			target = board.get("LtoR");
+			// Same thing again
 
-		int count = 0;
-		for (int i = 0; i < Board.boardSize; i++) {
-			for (int j = 0; j < Board.boardSize; j++) {
-				if (Game.boardSizeArray[i][j] != Seed.EMPTY) {
-					count++;
+			if (target.indexOf(human) > -1 && target.indexOf(computer) > -1) {
+				Game.flaggedSet.add("LtoR");
+			}
+
+			if (target.length() == Board.boardSize) {
+				if (target.indexOf(human) > -1 && target.indexOf(computer) > -1) {
+				} else if ((target.indexOf(human) > -1)) {
+					return Players.HUMAN;
+				} else {
+					return Players.COMPUTER;
 				}
 			}
 		}
 
-		if (count == Board.boardSize * Board.boardSize) {
-			System.out.println("It's a Draw");
-			return GameState.DRAW;
+		if (Board.diagonalSet.contains(playerSelection)) {
+			target = board.get("RtoL");
+			// Same thing again
+
+			if (target.indexOf(human) > -1 && target.indexOf(computer) > -1) {
+				Game.flaggedSet.add("RtoL");
+			}
+
+			if (target.length() == Board.boardSize) {
+				if (target.indexOf(human) > -1 && target.indexOf(computer) > -1) {
+				} else if ((target.indexOf(human) > -1)) {
+					return Players.HUMAN;
+				} else {
+					return Players.COMPUTER;
+				}
+			}
 		}
 
-		return GameState.PLAYING;
+		return Players.NONE;
 	}
 
 }

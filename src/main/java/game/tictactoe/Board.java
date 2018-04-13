@@ -1,6 +1,8 @@
 package game.tictactoe;
 
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 import game.tictactoe.enums.Seed;
 
@@ -11,6 +13,7 @@ public class Board {
 
 	private Scanner scan = new Scanner(System.in);
 	public static int boardSize;
+	public static Set<String> diagonalSet = new HashSet<>();
 	private boolean flag = true;
 
 	public int inputBoardSize() {
@@ -40,11 +43,12 @@ public class Board {
 
 	private void printBoard(int boardSize) {
 
-		for (int i = 0; i < boardSize; i++) {
+		for (int i = 0, k = boardSize; i < boardSize; i++, k--) {
 			for (int j = 0; j < boardSize; j++) {
 				System.out.print((i + 1) + "," + (j + 1) + "\t");
 				Game.boardSizeArray[i][j] = Seed.EMPTY;
 			}
+			diagonalSet.add(String.valueOf(i + 1) + String.valueOf(k));
 			System.out.println("");
 		}
 	}

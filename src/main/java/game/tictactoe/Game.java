@@ -1,6 +1,7 @@
 package game.tictactoe;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,9 +21,12 @@ public class Game {
 	private Players currentPlayer;
 	private String playerSelection;
 	private GameState gameState;
+	private int numberOfMoves = 0;
+	private int flaggedMoves = 0;
 
 	private List<String> listOfIndex = new ArrayList<>();
 	public static Seed boardSizeArray[][] = new Seed[10][10];
+	public static HashSet<String> flaggedSet = new HashSet<>();
 
 	private Board board;
 	private Marker marker;
@@ -51,16 +55,31 @@ public class Game {
 		while (currentState == GameState.PLAYING) {
 			if (currentPlayer == Players.HUMAN) {
 				playerSelection = human.makeMove(currentPlayer, listOfIndex);
+				winner.updateMap(playerSelection, currentPlayer);
 			} else {
 				playerSelection = computer.makeMove(currentPlayer, listOfIndex);
+				winner.updateMap(playerSelection, currentPlayer);
 			}
+			numberOfMoves++;
 			listOfIndex.add(playerSelection);
 			currentPlayer = currentPlayer == DEFAULT_FIRST_PLAYER ? Players.COMPUTER : Players.HUMAN;
-			gameState = winner.checkWin();
-			currentState = gameState;
-			if (currentState != GameState.PLAYING) {
-				break;
+			if (numberOfMoves >= (2 * Board.boardSize) - 1) {
+				Players player = winner.checkDistinctMarkers(playerSelection);
+				if (player != Players.NONE) {
+					System.out.println("Winner: " + player);
+					currentState = GameState.WINNER;
+				}
 			}
+
+			if (flaggedSet.size() != (2 * Board.boardSize) + 2) {
+				winner.checkDistinctMarkers(playerSelection);
+				flaggedMoves++;
+			} else {
+				currentState = GameState.DRAW;
+				System.out.println("DRAW");
+			}
+
+
 		}
 	}
 }
