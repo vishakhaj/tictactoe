@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="test.MarkerTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2018-04-13T09:28:33" hostname="Vishakhas-MacBook-Air.fritz.box" time="0.01">
+<testsuite name="test.MarkerTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2018-04-15T16:45:54" hostname="Vishakhas-Air.fritz.box" time="0.01">
   <properties/>
   <testcase name="whenMarker1lengthIsGreaterThan1_Return_ErrorMessage" classname="test.MarkerTest" time="0.001"/>
-  <testcase name="when_Marker1isANumber_Return_ErrorMessageDisplayed" classname="test.MarkerTest" time="0.001"/>
+  <testcase name="when_Marker1isANumber_Return_ErrorMessageDisplayed" classname="test.MarkerTest" time="0.0"/>
   <testcase name="when_Marker1orMarker2isALowerCaseAlphabet_Return_ErrorMessgaeDisplayed" classname="test.MarkerTest" time="0.0"/>
-  <testcase name="when_InputDecisionIsN_Return_NoErrorMessage" classname="test.MarkerTest" time="0.0"/>
+  <testcase name="when_InputDecisionIsN_Return_NoErrorMessage" classname="test.MarkerTest" time="0.001"/>
   <testcase name="when_InputDecisionIsNeitherYesorNo_Return_AskPromptAgain" classname="test.MarkerTest" time="0.0"/>
   <testcase name="when_MarkersIsCorrect_Return_NoErrorMessgae" classname="test.MarkerTest" time="0.001"/>
   <testcase name="whenMarker2lengthIsGreaterThan1_Return_ErrorMessage" classname="test.MarkerTest" time="0.0"/>
-  <testcase name="when_InputDecisionIsY_Return_NoErrorMessage" classname="test.MarkerTest" time="0.0"/>
+  <testcase name="when_InputDecisionIsY_Return_NoErrorMessage" classname="test.MarkerTest" time="0.001"/>
   <testcase name="when_InputDecisionIsn_Return_NoErrorMessage" classname="test.MarkerTest" time="0.001"/>
   <testcase name="when_Marker2isANumber_Return_ErrorMessageDisplayed" classname="test.MarkerTest" time="0.0"/>
-  <testcase name="when_InputDecisionIsy_Return_NoErrorMessage" classname="test.MarkerTest" time="0.0"/>
-  <testcase name="when_BothTheMarkersAreSame_Return_ErrorMessageDisplayed" classname="test.MarkerTest" time="0.001"/>
+  <testcase name="when_InputDecisionIsy_Return_NoErrorMessage" classname="test.MarkerTest" time="0.001"/>
+  <testcase name="when_BothTheMarkersAreSame_Return_ErrorMessageDisplayed" classname="test.MarkerTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

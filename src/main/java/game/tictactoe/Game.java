@@ -1,13 +1,10 @@
 package game.tictactoe;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Scanner;
 
 import game.tictactoe.enums.GameState;
 import game.tictactoe.enums.Players;
-import game.tictactoe.enums.Seed;
 
 /*
  * Calls methods of other classes
@@ -20,12 +17,8 @@ public class Game {
 	private GameState currentState;
 	private Players currentPlayer;
 	private String playerSelection;
-	private GameState gameState;
 	private int numberOfMoves = 0;
-	private int flaggedMoves = 0;
 
-	private List<String> listOfIndex = new ArrayList<>();
-	public static Seed boardSizeArray[][] = new Seed[10][10];
 	public static HashSet<String> flaggedSet = new HashSet<>();
 
 	private Board board;
@@ -54,15 +47,16 @@ public class Game {
 
 		while (currentState == GameState.PLAYING) {
 			if (currentPlayer == Players.HUMAN) {
-				playerSelection = human.makeMove(currentPlayer, listOfIndex);
+				playerSelection = human.makeMove(currentPlayer);
 				winner.updateMap(playerSelection, currentPlayer);
 			} else {
-				playerSelection = computer.makeMove(currentPlayer, listOfIndex);
+				playerSelection = computer.makeMove(currentPlayer);
 				winner.updateMap(playerSelection, currentPlayer);
 			}
 			numberOfMoves++;
-			listOfIndex.add(playerSelection);
 			currentPlayer = currentPlayer == DEFAULT_FIRST_PLAYER ? Players.COMPUTER : Players.HUMAN;
+
+			// check for winner only after certain number of moves
 			if (numberOfMoves >= (2 * Board.boardSize) - 1) {
 				Players player = winner.checkDistinctMarkers(playerSelection);
 				if (player != Players.NONE) {
@@ -71,15 +65,13 @@ public class Game {
 				}
 			}
 
+			// check if the game is a draw
 			if (flaggedSet.size() != (2 * Board.boardSize) + 2) {
 				winner.checkDistinctMarkers(playerSelection);
-				flaggedMoves++;
 			} else {
 				currentState = GameState.DRAW;
 				System.out.println("DRAW");
 			}
-
-
 		}
 	}
 }

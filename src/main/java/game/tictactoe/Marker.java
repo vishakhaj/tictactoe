@@ -12,14 +12,14 @@ import game.tictactoe.enums.ConfigMarkers;
 public class Marker {
 
 	private Scanner scan = new Scanner(System.in);
-	public static String marker1;
-	public static String marker2;
 	private String input;
 	private boolean flag = true;
 	private boolean inputSymbol = true;
-
 	private String regex = "^[A-Z]+$";
 	private Pattern pattern = Pattern.compile(regex);
+
+	public static String marker1;
+	public static String marker2;
 
 	// takes input from the user
 	public void markers() {

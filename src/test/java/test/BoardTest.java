@@ -13,7 +13,6 @@ import game.tictactoe.Board;
 public class BoardTest {
 
 	private static final String OUT_OUT_BOUNDS_ERROR_MESSAGE = "Please choose a board size between 3 and 10";
-	private static final String NUMBER_FORMATEXCPETION_ERROR_MESSAGE = "Please enter a number";
 	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 	private Board board;
 
@@ -25,40 +24,20 @@ public class BoardTest {
 
 	@Test
 	public void when_inputBoardSizeIsOfSize2_EnsureErrorMessageDisplayed() {
-		board.validateBoardSize("2");
+		board.validateBoardSize(2);
 		assertOutOfBoundsErrorMessageDisplayed();
 	}
 
 	@Test
 	public void setBoardSizeGreaterThan10_EnsureErrorMessageDisplayed() {
-		board.validateBoardSize("20");
+		board.validateBoardSize(20);
 		assertOutOfBoundsErrorMessageDisplayed();
 	}
 
 	@Test
 	public void setBoardSizeOf3EnsureNoErrorMessageDisplayed() {
-		board.validateBoardSize("3");
+		board.validateBoardSize(3);
 		assertNoErrorMessageDisplayed();
-	}
-
-	@Test
-	public void setBoardSizeOf10EnsureNoErrorMessageDisplayed() {
-		board.validateBoardSize("10");
-		assertNoErrorMessageDisplayed();
-	}
-
-	@Test
-	public void setBoardSizeWithInvalidNumberEnsureInvalidNumberMessageDisplayed() {
-		board.validateBoardSize("blah");
-		assertInvalidNumberMessageDisplayed();
-	}
-
-	@Test
-	public void test() {
-		String size = "3";
-		int validateBoardSize = board.validateBoardSize(size);
-		int inputBoardSize = board.inputBoardSize();
-		assertEquals(validateBoardSize, inputBoardSize);
 	}
 
 	private void assertOutOfBoundsErrorMessageDisplayed() {
@@ -67,10 +46,6 @@ public class BoardTest {
 
 	private void assertNoErrorMessageDisplayed() {
 		assertEquals("", outContent.toString().trim());
-	}
-
-	private void assertInvalidNumberMessageDisplayed() {
-		assertEquals(NUMBER_FORMATEXCPETION_ERROR_MESSAGE, outContent.toString().trim());
 	}
 
 }

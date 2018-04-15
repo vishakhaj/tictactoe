@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="test.HumanTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2018-04-13T09:28:33" hostname="Vishakhas-MacBook-Air.fritz.box" time="0.006">
+<testsuite name="test.HumanTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2018-04-15T16:45:54" hostname="Vishakhas-Air.fritz.box" time="0.002">
   <properties/>
-  <testcase name="when_PlayerSelectionIsGreaterThanRange_Return_ErrorMessageDisplayed" classname="test.HumanTest" time="0.001"/>
-  <testcase name="when_PlayerSelectionIsNotAnInt_Return_ErrorMessageDisplayed" classname="test.HumanTest" time="0.001"/>
-  <testcase name="when_PlayerSelectionIsInRange_Return_NoErrorMessage" classname="test.HumanTest" time="0.0"/>
-  <testcase name="when_ListContainsPlayerSelection_Return_ErrorMessageDisplayed" classname="test.HumanTest" time="0.0"/>
-  <testcase name="when_PlayerSelectionIsLessThanRange_Return_ErrorMessageDisplayed" classname="test.HumanTest" time="0.001"/>
+  <testcase name="when_PlayerSelectionIsInRange_Return_NoErrorMessage" classname="test.HumanTest" time="0.001"/>
   <testcase name="when_PlayerSelectionIsNull_ThrowException" classname="test.HumanTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>

@@ -15,7 +15,7 @@ public class Computer extends Move {
 	private String selectedElement;
 
 	// creates a list of preferred moves that the computer can play
-	public String makeMove(Players currentPlayer, List<String> listOfIndex) {
+	public String makeMove(Players currentPlayer) {
 
 		System.out.println("Computer");
 		for (int i = 0; i < Board.boardSize; i++) {
@@ -23,20 +23,19 @@ public class Computer extends Move {
 				preferredMoves.add(String.valueOf(((i + 1) * 10) + (j + 1)));
 			}
 		}
-		selectedElement = selectRandomMove(listOfIndex, preferredMoves);
+		selectedElement = selectRandomMove();
 		super.storeCurrentMove(selectedElement, currentPlayer);
 		super.printAllMoves();
 		return selectedElement;
 	}
 
 	// selects a random cell from the board
-	public String selectRandomMove(List<String> listOfIndex, List<String> preferredMoves) {
-
+	public String selectRandomMove() {
 		for (String p : preferredMoves) {
 			Random rand = new Random();
 			int randomIndex = rand.nextInt(preferredMoves.size());
 			selectedElement = preferredMoves.get(randomIndex);
-			if (!listOfIndex.contains(selectedElement)) {
+			if (!boardSet.contains(selectedElement)) {
 				preferredMoves.remove(randomIndex);
 				return selectedElement;
 			}

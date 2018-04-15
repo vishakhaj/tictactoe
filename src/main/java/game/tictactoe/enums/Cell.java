@@ -2,10 +2,10 @@ package game.tictactoe.enums;
 
 import game.tictactoe.Marker;
 
-public enum Seed {
+public enum Cell {
 	EMPTY("Empty"), MARKER1(Marker.marker1), MARKER2(Marker.marker2);
 
-	private Seed(final String marker) {
+	private Cell(final String marker) {
 		this.marker = marker;
 	}
 
@@ -14,6 +14,4 @@ public enum Seed {
 	public String getMarker() {
 		return marker;
 	}
-
-
 }

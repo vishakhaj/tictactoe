@@ -1,8 +1,6 @@
 package game.tictactoe;
 
-import java.util.List;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 import game.tictactoe.enums.Players;
 
@@ -12,22 +10,24 @@ import game.tictactoe.enums.Players;
  */
 public class Human extends Move {
 
-	Scanner scan = new Scanner(System.in);
+	private Scanner scan = new Scanner(System.in);
+	private boolean flag = true;
 	private String input;
 	private String playerSelection;
-	private boolean flag = true;
-	private String regex = "[0-9, /,]+";
-	private Pattern pattern = Pattern.compile(regex);
+	private String regex = "\\d+,\\d+";
 
 	// inputs user's move
-	public String makeMove(Players currentPlayer, List<String> listOfIndex) {
+	public String makeMove(Players currentPlayer) {
 		flag = true;
-
+		System.out.println(currentPlayer.toString() + ": Enter your move: ");
 		while (flag) {
-			System.out.println(currentPlayer.toString() + ": Enter your move: ");
 			input = scan.next();
-			playerSelection = input.replaceAll(",", "");
-			validatePlayerSelection(playerSelection, listOfIndex);
+			if (input.matches(regex)) {
+				playerSelection = input.replaceAll(",", "");
+				validatePlayerSelection(playerSelection);
+			} else {
+				System.err.println("Please enter in the correct format. For eg: 1,1 or 3,3");
+			}
 		}
 		super.storeCurrentMove(playerSelection, currentPlayer);
 		super.printAllMoves();
@@ -35,22 +35,15 @@ public class Human extends Move {
 	}
 
 	// validates user's selection
-	public void validatePlayerSelection(String playerSelection, List<String> listOfIndex) {
-		try {
-
-			if (playerSelection == null || playerSelection.isEmpty()) {
-				throw new NullPointerException();
-			} else if (Integer.parseInt(playerSelection) < 11
-					|| Integer.parseInt(playerSelection) > ((Board.boardSize * 10) + Board.boardSize)) {
-				System.err.println("The input you have entered cannot be found on the board");
-			} else if (listOfIndex.contains(playerSelection)) {
-				System.err.println("Cell already taken. Please select a different move.");
-			} else {
-				flag = false;
-			}
-
-		} catch (NumberFormatException e) {
-			System.err.println("The input must be a number on the board");
+	public void validatePlayerSelection(String playerSelection) {
+		
+		if (playerSelection == null) {
+			throw new NullPointerException();
+		}
+		if (boardSet.contains(playerSelection)) {
+			System.err.println("Cell already taken. Please select a different move.");
+		} else {
+			flag = false;
 		}
 	}
 

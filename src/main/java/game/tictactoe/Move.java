@@ -1,28 +1,33 @@
 package game.tictactoe;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import game.tictactoe.enums.Cell;
 import game.tictactoe.enums.Players;
-import game.tictactoe.enums.Seed;
 
 public abstract class Move {
 
+	private String cellMarker;
+	private static Map<String, String> boardMap = new HashMap<>();
+	protected Set<String> boardSet = new HashSet<>();
+
 	protected void storeCurrentMove(String playerSelection, Players currentPlayer) {
-		for (int i = 0; i < Board.boardSize; i++) {
-			for (int j = 0; j < Board.boardSize; j++) {
-				if ((((i + 1) * 10) + (j + 1)) == Integer.parseInt(playerSelection)) {
-					Game.boardSizeArray[i][j] = currentPlayer == Players.HUMAN ? Seed.MARKER1 : Seed.MARKER2;
-				}
-			}
-		}
+		cellMarker = currentPlayer == Players.HUMAN ? Cell.MARKER1.getMarker() : Cell.MARKER2.getMarker();
+		boardMap.put(playerSelection, cellMarker);
+		boardSet = boardMap.keySet();
 	}
 
 	protected void printAllMoves() {
-		for (int i = 0; i < Board.boardSize; i++) {
-			for (int j = 0; j < Board.boardSize; j++) {
-				if (Game.boardSizeArray[i][j] == Seed.MARKER1) {
-					System.out.print(Seed.MARKER1.getMarker() + "\t");
-				} else if (Game.boardSizeArray[i][j] == Seed.MARKER2) {
-					System.out.print(Seed.MARKER2.getMarker() + "\t");
-				} else {
+
+		for(int i = 0; i < Board.boardSize; i++) {
+			for(int j = 0; j < Board.boardSize; j++) {
+				int position = ((i + 1) * 10) + (j + 1);
+				if (boardMap.containsKey((String.valueOf(position)))) {
+					System.out.print(boardMap.get((String.valueOf(position))) + "\t");
+				}else {
 					System.out.print((i + 1) + "," + (j + 1) + "\t");
 				}
 			}

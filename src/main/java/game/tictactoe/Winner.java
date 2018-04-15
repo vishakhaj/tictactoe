@@ -2,17 +2,22 @@ package game.tictactoe;
 
 import java.util.HashMap;
 
+import game.tictactoe.enums.Cell;
 import game.tictactoe.enums.Players;
-import game.tictactoe.enums.Seed;
 
 public class Winner {
 
 	private HashMap<String, String> board = new HashMap<>();
-
+	private String rowKey;
+	private String columnKey;
+	private String marker;
+	private String diagonalKey;
+	private String target;
+	
 	public void updateMap(String playerSelection, Players player) {
-		String rowKey = "row" + playerSelection.charAt(0);
-		String columnKey = "column" + playerSelection.charAt(1);
-		String marker = player == Players.HUMAN ? Seed.MARKER1.getMarker() : Seed.MARKER2.getMarker();
+		rowKey = "row" + playerSelection.charAt(0);
+		columnKey = "column" + playerSelection.charAt(1);
+		marker = player == Players.HUMAN ? Cell.MARKER1.getMarker() : Cell.MARKER2.getMarker();
 
 		if (board.containsKey(rowKey)) {
 			// Get the row value and concatenate the new value at the end of the
@@ -31,9 +36,10 @@ public class Winner {
 		}
 
 		if (playerSelection.charAt(0) == playerSelection.charAt(1)) {
-			String diagonalKey = "LtoR";
+			diagonalKey = "LtoR";
 			if(board.containsKey(diagonalKey)){
-				//Get the column value and concatenate the new value at the end of the string and put it back
+				// Get the diagonal LtoR value and concatenate the new value at
+				// the end of the string and put it back
 				board.put(diagonalKey, board.get(diagonalKey) + marker);
 			} else {
 				board.put(diagonalKey, marker);
@@ -41,9 +47,10 @@ public class Winner {
 		}
 
 		if (Board.diagonalSet.contains(playerSelection)) {
-			String diagonalKey = "RtoL";
+			diagonalKey = "RtoL";
 			if(board.containsKey(diagonalKey)){
-				//Get the column value and concatenate the new value at the end of the string and put it back
+				// Get the diagonal RtoL value and concatenate the new value at
+				// the end of the string and put it back
 				board.put(diagonalKey, board.get(diagonalKey) + marker);
 			} else {
 				board.put(diagonalKey, marker);
@@ -52,20 +59,21 @@ public class Winner {
 	}
 
 	public Players checkDistinctMarkers(String playerSelection) {
-		String human = Seed.MARKER1.getMarker();
-		String computer = Seed.MARKER2.getMarker();
-		String rowKey = "row" + playerSelection.charAt(0);
-		String columnKey = "column" + playerSelection.charAt(1);
-		String target;
+		String human = Cell.MARKER1.getMarker();
+		String computer = Cell.MARKER2.getMarker();
+		rowKey = "row" + playerSelection.charAt(0);
+		columnKey = "column" + playerSelection.charAt(1);
 
-		// Gets the value stores it in target
-		// Current example will return => "XXX"
+		// Gets the row value stores it in target. Example, row0 -> "XXX"
 		target = board.get(rowKey);
 
+		// checks if the target contains both the markers. If it does it adds it
+		// to the flaggedSet
 		if (target.indexOf(human) > -1 && target.indexOf(computer) > -1) {
 			Game.flaggedSet.add(rowKey);
 		}
 
+		// checks for winner if target equals the length of the board size
 		if (target.length() == Board.boardSize) {
 			if (target.indexOf(human) > -1 && target.indexOf(computer) > -1) {
 			} else if ((target.indexOf(human) > -1)) {
@@ -75,8 +83,12 @@ public class Winner {
 			}
 		}
 
+		// Gets the column value and stores it in target. Example, column0 ->
+		// "XO"
 		target = board.get(columnKey);
 
+		// checks if the target contains both the markers. If it does it adds it
+		// to the flaggedSet
 		if (target.indexOf(human) > -1 && target.indexOf(computer) > -1) {
 			Game.flaggedSet.add(columnKey);
 		}
@@ -92,7 +104,6 @@ public class Winner {
 
 		if (playerSelection.charAt(0) == playerSelection.charAt(1)) {
 			target = board.get("LtoR");
-			// Same thing again
 
 			if (target.indexOf(human) > -1 && target.indexOf(computer) > -1) {
 				Game.flaggedSet.add("LtoR");
@@ -110,7 +121,6 @@ public class Winner {
 
 		if (Board.diagonalSet.contains(playerSelection)) {
 			target = board.get("RtoL");
-			// Same thing again
 
 			if (target.indexOf(human) > -1 && target.indexOf(computer) > -1) {
 				Game.flaggedSet.add("RtoL");
