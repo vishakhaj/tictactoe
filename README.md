@@ -10,4 +10,4 @@ Gradle is used to build the project and to run unit tests.
 
 <h2>Class Diagram</h2>
 
-![alt text](https://github.com/vishakhaj/tictactoe/blob/master/UML%20Diagram.jpg)
+![alt text](https://github.com/vishakhaj/tictactoe/blob/master/UML.jpg)
